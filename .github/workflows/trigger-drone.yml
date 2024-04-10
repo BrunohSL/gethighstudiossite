@@ -15,6 +15,7 @@ jobs:
         # condition you can continue the execution with the populated error message.
         if: always() && (steps.lint_pr_title.outputs.error_message != null)
         with:
+          trigger: 'rodar drone'
           header: erro-semantico
           message: |
             Menssagem teste
