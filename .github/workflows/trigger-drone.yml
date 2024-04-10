@@ -5,10 +5,11 @@ on:
 
 jobs:
  trigger_drone_ci:
+  if: contains(github.event.comment.body, 'rodar drone')
   runs-on: [ubuntu-latest]
   steps:
   - name: Run Drone
-    if: contains(github.event.comment.body, 'rodar drone')
+    # if: contains(github.event.comment.body, 'rodar drone')
   - uses: marocchino/sticky-pull-request-comment@v2
     # When the previous steps fails, the workflow would stop. By adding this
     # condition you can continue the execution with the populated error message.
