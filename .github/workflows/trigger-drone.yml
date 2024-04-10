@@ -15,6 +15,11 @@ jobs:
         with:
           trigger: 'rodar drone'
           reaction: rocket
+          message: |
+            Esta é uma menssagem teste
+            ```
+            ${{ steps.lint_pr_title.outputs.error_message }}
+            ```
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - run: 'echo Found it!'
