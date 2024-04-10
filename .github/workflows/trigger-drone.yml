@@ -2,21 +2,21 @@ name: Trigger Drone CI
 on:
   issue_comment:
     types: [created, edited, deleted]
+
 jobs:
  trigger_drone_ci:
    runs-on: [ubuntu-latest]
    steps:
     - name: Run Drone
       if: contains(github.event.comment.body, 'rodar drone')
-      run:
-      - uses: marocchino/sticky-pull-request-comment@v2
-        # When the previous steps fails, the workflow would stop. By adding this
-        # condition you can continue the execution with the populated error message.
-        if: always() && (steps.lint_pr_title.outputs.error_message != null)
-        with:
-          header: Rodou
-          message: |
-            Essa é uma menssagem teste
+    - uses: marocchino/sticky-pull-request-comment@v2
+      # When the previous steps fails, the workflow would stop. By adding this
+      # condition you can continue the execution with the populated error message.
+      if: always() && (steps.lint_pr_title.outputs.error_message != null)
+      with:
+        header: Rodou
+        message: |
+          Essa é uma menssagem teste
 
     # if: contains(github.event.comment.body, 'rodar drone')
     # runs-on: ubuntu-latest
