@@ -7,22 +7,43 @@ permissions:
   pull-requests: write
 
 jobs:
-  trigger-drone:
-    if: contains(github.event.comment.body, 'rodar drone')
+  comment_on_pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: marocchino/sticky-pull-request-comment@v2
-        # When the previous steps fails, the workflow would stop. By adding this
-        # condition you can continue the execution with the populated error message.
-        if: always() && (steps.lint_pr_title.outputs.error_message != null)
-        with:
-          trigger: 'rodar drone'
-          header: erro-semantico
-          message: |
-            Menssagem teste
-            ```
-            ${{ steps.lint_pr_title.outputs.error_message }}
-            ```
+      - name: Check if comment should trigger action
+        if: startsWith(github.event.comment.body, '/comment')  # Você pode modificar isso conforme necessário
+        run: |
+          # Extrair informações do comentário
+          PR_NUMBER=$(jq -r ".issue.number" "$GITHUB_EVENT_PATH")
+          REPO_FULLNAME=$(jq -r ".repository.full_name" "$GITHUB_EVENT_PATH")
+
+          # Comentar na PR
+          COMMENT_BODY="Olá! Eu sou um comentário de ação automática."
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"body\": \"$COMMENT_BODY\"}" \
+            "https://api.github.com/repos/$REPO_FULLNAME/issues/$PR_NUMBER/comments"
+
+
+
+
+# Cant make this work
+      # - uses: marocchino/sticky-pull-request-comment@v2
+      #   # When the previous steps fails, the workflow would stop. By adding this
+      #   # condition you can continue the execution with the populated error message.
+      #   if: always() && (steps.lint_pr_title.outputs.error_message != null)
+      #   with:
+      #     trigger: 'rodar drone'
+      #     header: erro-semantico
+      #     message: |
+      #       Menssagem teste
+      #       ```
+      #       ${{ steps.lint_pr_title.outputs.error_message }}
+      #       ```
+
+
+# Kinda works
       # - uses: khan/pull-request-comment-trigger@v1.1.0
       #   id: check
       #   with:
