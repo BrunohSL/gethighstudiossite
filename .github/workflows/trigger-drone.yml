@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if comment should trigger action
-        if: startsWith(github.event.comment.body, '/comment')  # Você pode modificar isso conforme necessário
+        if: startsWith(github.event.comment.body, 'rodar drone')  # Você pode modificar isso conforme necessário
         run: |
           # Extrair informações do comentário
           PR_NUMBER=$(jq -r ".issue.number" "$GITHUB_EVENT_PATH")
           REPO_FULLNAME=$(jq -r ".repository.full_name" "$GITHUB_EVENT_PATH")
 
           # Comentar na PR
-          COMMENT_BODY="Olá! Eu sou um comentário de ação automática."
+          COMMENT_BODY="Olá! João sobe meu foguete !"
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
