@@ -1,38 +1,17 @@
-name: "PR Semantica"
-
+name: pull request comment
 on:
-  pull_request_target:
-    types:
-      - opened
-      - edited
-      - synchronize
-
-permissions:
-  pull-requests: write
-
+  issue_comment:
+    types: [created, edited, deleted]
 jobs:
-  main:
-    name: Validate PR title
-    runs-on: ubuntu-latest
-    steps:
-      - uses: amannn/action-semantic-pull-request@v5       
-        id: lint_pr_title
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: marocchino/sticky-pull-request-comment@v2
-        # When the previous steps fails, the workflow would stop. By adding this
-        # condition you can continue the execution with the populated error message.
-        if: always() && (steps.lint_pr_title.outputs.error_message != null)
-        with:
-          header: erro-semantico
-          message: |
-            Olá e obrigado por abrir este pedido de pull! 👋🏼
-            
-            Exigimos que os títulos dos pedidos de pull sigam a especificação de Commits Convencionais e parece que o título proposto precisa ser ajustado.
-
-            Detalhes:
-            
-            ```
-            ${{ steps.lint_pr_title.outputs.error_message }}
-            ```
+ job01:
+  #  if: contains(github.event.comment.html_url, '/pull/')    # check if the comments come from pull request, exclude those from issue.
+   runs-on: [ubuntu-latest]
+   steps:
+    - name: say hello
+      if: contains(github.event.comment.body, 'hello')   # check the comment if it contains the keywords
+      run: |
+       echo say hello
+    - name: test
+      if: contains(github.event.comment.body, 'test')  # check the comment if it contains the keywords
+      run: |
+       echo test
