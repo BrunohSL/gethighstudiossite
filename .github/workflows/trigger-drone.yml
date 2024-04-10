@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   trigger-drone:
-    if: contains(github.event.comment.body, 'start-ci-cd')
+    if: contains(github.event.comment.body, 'rodar drone')
     runs-on: ubuntu-latest
     steps:
       - uses: marocchino/sticky-pull-request-comment@v2
