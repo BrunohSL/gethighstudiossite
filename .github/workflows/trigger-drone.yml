@@ -8,14 +8,15 @@ jobs:
    steps:
     - name: Run Drone
       if: contains(github.event.comment.body, 'rodar drone')
-    - uses: marocchino/sticky-pull-request-comment@v2
-      # When the previous steps fails, the workflow would stop. By adding this
-      # condition you can continue the execution with the populated error message.
-      if: always() && (steps.lint_pr_title.outputs.error_message != null)
-      with:
-        header: Rodou
-        message: |
-          Essa é uma menssagem teste
+      run:
+      - uses: marocchino/sticky-pull-request-comment@v2
+        # When the previous steps fails, the workflow would stop. By adding this
+        # condition you can continue the execution with the populated error message.
+        if: always() && (steps.lint_pr_title.outputs.error_message != null)
+        with:
+          header: Rodou
+          message: |
+            Essa é uma menssagem teste
 
     # if: contains(github.event.comment.body, 'rodar drone')
     # runs-on: ubuntu-latest
