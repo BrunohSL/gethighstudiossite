@@ -10,17 +10,23 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@v1.1.0
-        id: check
+      - uses: marocchino/sticky-pull-request-comment@v2
+        # When the previous steps fails, the workflow would stop. By adding this
+        # condition you can continue the execution with the populated error message.
+        if: always() && (steps.lint_pr_title.outputs.error_message != null)
         with:
-          trigger: 'rodar drone'
-          reaction: rocket
+          header: erro-semantico
           message: |
-            Esta é uma menssagem teste
+            Menssagem teste
             ```
             ${{ steps.lint_pr_title.outputs.error_message }}
             ```
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - run: 'echo Found it!'
-        if: steps.check.outputs.triggered == 'true'
+      # - uses: khan/pull-request-comment-trigger@v1.1.0
+      #   id: check
+      #   with:
+      #     trigger: 'rodar drone'
+      #     reaction: rocket
+      #   env:
+      #     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      # - run: 'echo Found it!'
+      #   if: steps.check.outputs.triggered == 'true'
