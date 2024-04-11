@@ -16,7 +16,7 @@ jobs:
 
           # Comentar na PR
           COMMENT_BODY={
-            \"comment\": \"Olá! João sobe meu foguete !\",
+            \"comentario\": \"Olá! João sobe meu foguete !\",
             \"pr_number\": $PR_NUMBER,
             \"repo_fullname\": \"$REPO_FULLNAME\"
           }
