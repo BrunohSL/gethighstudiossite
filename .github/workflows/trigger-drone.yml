@@ -20,7 +20,7 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d "{\"body\": \"$COMMENT_BODY\"}" \
-            "https://racer-ethical-simply.ngrok-free.app/"
+            "https://racer-ethical-simply.ngrok-free.app/webhook"
             # "https://api.github.com/repos/$REPO_FULLNAME/issues/$PR_NUMBER/comments"
 
 
