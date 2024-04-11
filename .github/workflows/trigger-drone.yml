@@ -15,7 +15,11 @@ jobs:
           REPO_FULLNAME=$(jq -r ".repository.full_name" "$GITHUB_EVENT_PATH")
 
           # Comentar na PR
-          COMMENT_BODY="Olá! João sobe meu foguete !"
+          COMMENT_BODY={
+            "comment": ""Olá! João sobe meu foguete !"",
+            "pr_number": $PR_NUMBER,
+            "repo_fullname": "$REPO_FULLNAME"
+          }
           curl -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/json" \
